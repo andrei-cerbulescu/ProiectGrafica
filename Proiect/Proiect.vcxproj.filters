@@ -38,5 +38,11 @@
     <ClInclude Include="keyboard.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="bara_progres.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scena_oprit_de_politie.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

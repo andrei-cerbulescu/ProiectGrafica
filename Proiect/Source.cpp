@@ -7,6 +7,8 @@
 #include "./masina_jucator.h"
 #include "./masini.h"
 #include "./keyboard.h"
+#include "./bara_progres.h"
+#include "./scena_oprit_de_politie.h"
 
 using namespace std;
 
@@ -29,6 +31,7 @@ float temp_mancare = 100;
 int urmeaza_politie = 0;
 int este_politie = 0;
 int flashuri_date = 0;
+bool oprit_de_politie = false;
 
 void init(void)
 {
@@ -41,8 +44,14 @@ void startgame(void)
 {
 	if (loc_vert < -150)
 	{
+
+		if (este_politie && timp > 0.35) {
+			oprit_de_politie = true;
+		}
+
 		este_politie = 0;
 		height = vector[rand() % 3];
+
 		if (urmeaza_politie) {
 			urmeaza_politie = 0;
 			este_politie = 1;
@@ -50,6 +59,7 @@ void startgame(void)
 		if (!este_politie && !urmeaza_politie) {
 			urmeaza_politie = rand() % 100 < 20;
 		}
+
 		loc_vert = 800;
 	}
 
@@ -82,19 +92,32 @@ void drawScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	deseneaza_sosea();
+	if (oprit_de_politie || temp_mancare<=0) {
+		if (oprit_de_politie) {
+			scena_oprit_de_politie();
+		}
+		if (temp_mancare <= 0) {
+			RenderString(400.0f, -100.0f, GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"S-a racit mancarea! :/");
+		}
+	}
+	else {
+		deseneaza_sosea();
 
-	deseneaza_masina_jucator();
+		deseneaza_masina_jucator();
 
-	deseneaza_masina();
-	
-	deseneazaIarba();
+		deseneaza_masina();
 
-	livreaza_comanda();
-	mancare_calda();
-	vitezometru();
+		deseneazaIarba();
 
-	startgame();
+		livreaza_comanda();
+		mancare_calda();
+		vitezometru();
+
+		deseneaza_bara_progres();
+
+		startgame();
+	}
+
 	glutPostRedisplay();
 	glutSwapBuffers();
 	glFlush();
@@ -116,7 +139,9 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowSize(800, 600);
 	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Depaseste masinile - mini game");
+	glutCreateWindow("Livreaza Comanda");
+	wstring path = L".\\sunete\\glovo.wav";
+	PlaySound(path.c_str(), NULL, SND_ASYNC | SND_FILENAME);
 	init();
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(reshape);
