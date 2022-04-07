@@ -19,4 +19,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="iarba.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="texte.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sosea.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="masina_jucator.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="masini.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

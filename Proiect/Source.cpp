@@ -1,6 +1,11 @@
 #include <iostream>
 #include<windows.h>
 #include <GL/freeglut.h>
+#include "./Iarba.h"
+#include "./Texte.h"
+#include "./sosea.h"
+#include "./masina_jucator.h"
+#include "./masini.h"
 
 using namespace std;
 
@@ -27,14 +32,6 @@ void init(void)
 	glOrtho(left_m, right_m, bottom_m, top_m, -1.0, 1.0);
 }
 
-void RenderString(float x, float y, void* font, const unsigned char* string)
-{
-
-	glColor3f(0.0f, 0.0f, 0.0f);
-	glRasterPos2f(x, y);
-
-	glutBitmapString(font, string);
-}
 void startgame(void)
 {
 
@@ -73,104 +70,15 @@ void startgame(void)
 void drawScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
+	deseneazaIarba();
 
+	depaseste_masinile();
 
-	glColor3f(0.55, 0.788, 0.451);
+	deseneaza_sosea();
 
-	// Iarba de jos
-	glBegin(GL_POLYGON);
-	glVertex2i(-100, -140);// Stanga jos
-	glVertex2i(700, -140); // Dreapta jos
-	glVertex2i(700, -80);  // Dreapta sus
-	glVertex2i(-100, -80); // Stanga sus
-	glEnd();
+	deseneaza_masina_jucator();
 
-	// Iarba de sus
-	glBegin(GL_POLYGON);
-	glVertex2i(-100, 400);// Stanga jos
-	glVertex2i(700, 400); // Dreapta jos
-	glVertex2i(700, 460); // Dreapta sus
-	glVertex2i(-100, 460);// Stanga sus
-	glEnd();
-	RenderString(200.0f, 425.0f, GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"Depaseste masinile!");
-
-	// Delimitare sosea
-	glLineWidth(3);
-	glColor3f(1, 1, 1);
-
-	// Delimitam soseaua de iarba partea de jos
-	glBegin(GL_LINES);
-	glVertex2i(-100, -80);
-	glVertex2i(1500, -80);
-	glEnd();
-
-	// Delimitam soseaua de iarba partea de sus
-	glBegin(GL_LINES);
-	glVertex2i(-100, 400);
-	glVertex2i(1500, 400);
-	glEnd();
-
-	// Liniile intrerupte
-	glPushMatrix();
-	glTranslated(i, 0.0, 0.0);
-
-
-	glBegin(GL_LINES);
-	glVertex2i(-100, 80);
-	glVertex2i(1500, 80);
-	glEnd();
-
-	glBegin(GL_LINES);
-	glVertex2i(-100, 240);
-	glVertex2i(1500, 240);
-	glEnd();
-	glPopMatrix();
-
-
-
-	//desenam masina
-	glPushMatrix();
-	glTranslated(0.0, j, 0.0);
-
-
-
-	glColor3f(0.996, 0.365, 0.149);
-	glRecti(-45, -15, 45, 15);
-
-	if (ok == 0)
-	{
-		rsj = 8;
-		rss = -8;
-		rdj = -8;
-		rds = 8;
-	}
-
-
-	glPopMatrix();
-	glPopMatrix();
-
-	if (ok == 0) {
-		RenderString(250.0f, 200.0f, GLUT_BITMAP_8_BY_13, (const unsigned char*)"GAME OVER");
-	}
-
-	if (contor == 1 && (j != 160 && j != 320))
-		j = j + 1;
-	else if (contor == -1 && (j != 160 && j != 0))
-		j = j - 1;
-	else {
-		contor = 0;
-
-	}
-
-	//desenam a doua masina (adversara)
-	glPushMatrix();
-	glTranslated(loc_vert, height, 0.0);
-
-	glColor3f(0.471, 0.667, 0.949);
-	glRecti(-45, -15, 45, 15);
-
-
-	glPopMatrix();
+	deseneaza_masina();
 
 	startgame();
 	glutPostRedisplay();
