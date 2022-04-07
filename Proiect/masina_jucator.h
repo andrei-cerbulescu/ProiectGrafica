@@ -10,10 +10,9 @@ void deseneaza_masina_jucator() {
 	glPushMatrix();
 	glTranslated(0.0, j, 0.0);
 
-
-
 	glColor3f(0.996, 0.365, 0.149);
 	glRecti(-45, -15, 45, 15);
+	RenderString(-15, -3, GLUT_BITMAP_8_BY_13, (const unsigned char*)"GLOVO");
 
 	if (ok == 0)
 	{

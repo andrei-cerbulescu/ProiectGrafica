@@ -6,6 +6,7 @@
 #include "./sosea.h"
 #include "./masina_jucator.h"
 #include "./masini.h"
+#include "./keyboard.h"
 
 using namespace std;
 
@@ -24,6 +25,7 @@ int score = 0;
 double timp = 0.15;
 int pct = 1000;
 double rsj, rdj, rss, rds = 0;
+float temp_mancare = 100;
 
 void init(void)
 {
@@ -34,6 +36,18 @@ void init(void)
 
 void startgame(void)
 {
+	if (loc_vert < -150)
+	{
+		height = vector[rand() % 3];
+		loc_vert = 800;
+	}
+
+	if (score >= pct && pct <= 15000)
+	{
+		timp += 0.1;
+		pct += 1000;
+	}
+
 
 	if (height != j || (loc_vert > 90 || loc_vert < -90))
 	{
@@ -45,20 +59,6 @@ void startgame(void)
 		i = i - 2 * timp;
 
 		loc_vert -= timp;
-
-		if (loc_vert < -150)
-		{
-			score += 100;
-			height = vector[rand() % 3];
-			cout << "Score:  " << score << endl;
-			loc_vert = 800;
-		}
-
-		if (score >= pct && pct <= 15000)
-		{
-			timp += 0.1;
-			pct += 1000;
-		}
 
 		glutPostRedisplay();
 	}
@@ -79,7 +79,9 @@ void drawScene(void)
 	
 	deseneazaIarba();
 
-	depaseste_masinile();
+	livreaza_comanda();
+	mancare_calda();
+	vitezometru();
 
 	startgame();
 	glutPostRedisplay();
@@ -96,53 +98,6 @@ void reshape(int w, int h)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
-
-void miscasus(void)
-{
-	if (ok != 0)
-	{
-		if (j < 320)
-		{
-			contor = 1;
-			j += 1;
-		}
-
-		glutPostRedisplay();
-	}
-}
-
-void miscajos(void)
-{
-	if (ok != 0)
-	{
-		if (j > 0)
-		{
-			contor = -1;
-			j -= 1;
-
-
-		}
-
-		glutPostRedisplay();
-	}
-}
-
-void keyboard(int key, int x, int y)
-{
-
-
-	switch (key) {
-	case GLUT_KEY_UP:
-		miscasus();
-		break;
-	case GLUT_KEY_DOWN:
-		miscajos();
-		break;
-
-	}
-
-}
-
 
 int main(int argc, char** argv)
 {

@@ -149,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="iarba.h" />
+    <ClInclude Include="keyboard.h" />
     <ClInclude Include="masina_jucator.h" />
     <ClInclude Include="masini.h" />
     <ClInclude Include="sosea.h" />
