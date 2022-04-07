@@ -26,6 +26,8 @@ double timp = 0.15;
 int pct = 1000;
 double rsj, rdj, rss, rds = 0;
 float temp_mancare = 100;
+int urmeaza_politie = 0;
+int este_politie = 0;
 
 void init(void)
 {
@@ -38,7 +40,15 @@ void startgame(void)
 {
 	if (loc_vert < -150)
 	{
+		este_politie = 0;
 		height = vector[rand() % 3];
+		if (urmeaza_politie) {
+			urmeaza_politie = 0;
+			este_politie = 1;
+		}
+		if (!este_politie && !urmeaza_politie) {
+			urmeaza_politie = rand() % 100 < 20;
+		}
 		loc_vert = 800;
 	}
 
