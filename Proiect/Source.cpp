@@ -28,6 +28,7 @@ double rsj, rdj, rss, rds = 0;
 float temp_mancare = 100;
 int urmeaza_politie = 0;
 int este_politie = 0;
+int flashuri_date = 0;
 
 void init(void)
 {
