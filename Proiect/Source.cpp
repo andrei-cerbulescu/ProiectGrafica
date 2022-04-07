@@ -70,15 +70,16 @@ void startgame(void)
 void drawScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	deseneazaIarba();
-
-	depaseste_masinile();
 
 	deseneaza_sosea();
 
 	deseneaza_masina_jucator();
 
 	deseneaza_masina();
+	
+	deseneazaIarba();
+
+	depaseste_masinile();
 
 	startgame();
 	glutPostRedisplay();
