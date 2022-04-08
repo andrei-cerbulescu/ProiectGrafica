@@ -1,7 +1,11 @@
 #pragma once
 #include <GL/freeglut.h>
+<<<<<<< HEAD
 #include <iostream>
 #include "GameOver.h"
+=======
+#include "./radio.h"
+>>>>>>> origin/master
 
 extern double ok, j, contor, timp;
 int choice;
@@ -74,6 +78,9 @@ void keyboardSpecialKeys(int key, int x, int y)
 			handle_choice_right();
 			break;
 		}
+		break;
+	case GLUT_KEY_PAGE_UP:
+		schimba_canal(1);
 		break;
 	}
 	case State::Started: {
