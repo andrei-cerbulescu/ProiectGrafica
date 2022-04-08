@@ -14,6 +14,9 @@ void miscasus(void)
 {
 	if (ok != 0)
 	{
+		mciSendString(L"close screetch", NULL, 0, NULL);
+		mciSendString(L"open \".\\sunete\\screetch.wav\" type mpegvideo alias screetch", NULL, 0, NULL);
+		mciSendString(L"play screetch", NULL, 0, NULL);
 		if (j < 320)
 		{
 			contor = 1;
@@ -27,6 +30,9 @@ void miscajos(void)
 {
 	if (ok != 0)
 	{
+		mciSendString(L"close screetch", NULL, 0, NULL);
+		mciSendString(L"open \".\\sunete\\screetch.wav\" type mpegvideo alias screetch", NULL, 0, NULL);
+		mciSendString(L"play screetch", NULL, 0, NULL);
 		if (j > 0)
 		{
 			contor = -1;
@@ -164,6 +170,14 @@ void joystick(unsigned int buttonmask, int x, int y, int z)
 		case Button_Direction::DOWN:
 			miscajos();
 			break;
+		case Button_Direction::LEFT: {
+			decelereaza();
+			break;
+		}
+		case Button_Direction::RIGHT: {
+			accelereaza();
+			break;
+		}
 		}
 		switch (buttonmask) {
 		case 128:

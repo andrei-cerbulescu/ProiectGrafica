@@ -11,6 +11,8 @@ extern double ok;
 extern double j;
 extern double i;
 extern double rsj, rdj, rss, rds;
+extern double progres;
+extern float temp_mancare;
 
 void deseneaza_ecran_game_over(void) {
 	glColor3f(0, 0, 0);
@@ -76,7 +78,7 @@ void deseneaza_ecran_game_over(void) {
 void handle_game_over_screen() {
 	std::cout << choice << std::endl;
 	switch (choice) {
-		case 0: rsj = 0; rdj = 0; rss = 0; rds = 0.0; j = 0.0; ok = 1;  current_state = State::Started; break;
+	case 0: rsj = 0; rdj = 0; rss = 0; rds = 0.0; j = 0.0; ok = 1; progres = 0; temp_mancare = 100;  current_state = State::Started; break;
 		case 1: glutLeaveMainLoop(); break;
 	}
 }

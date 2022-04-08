@@ -38,6 +38,7 @@ int urmeaza_politie = 0;
 int este_politie = 0;
 int flashuri_date = 0;
 bool oprit_de_politie = false;
+double progres = 0;
 
 State current_state = State::Started;
 
@@ -156,7 +157,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGTH);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Livreaza Comanda");
-	PlaySound(L".\\sunete\\glovo.wav", NULL, SND_ASYNC | SND_FILENAME);
+	//PlaySound(L".\\sunete\\glovo.wav", NULL, SND_ASYNC | SND_FILENAME);
 	init();
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(reshape);

@@ -2,6 +2,7 @@
 #include <GL/freeglut.h>
 #include "./texte.h"
 #include <string>
+#pragma comment(lib, "Winmm.lib")
 
 int id_canal = 0;
 int decalaj = 0;
@@ -17,12 +18,16 @@ void schimba_canal(int val) {
 
 void schimba_muzica() {
 	PlaySound(NULL, NULL, SND_ASYNC | SND_FILENAME);
+	mciSendString(L"close radio", NULL, 0, NULL);
 	switch (id_canal) {
 	case 1:
-		PlaySound(L".\\sunete\\kiss_fm.wav", NULL, SND_ASYNC | SND_FILENAME);
+		mciSendString(L"open \".\\sunete\\kiss_fm.wav\" type mpegvideo alias radio", NULL, 0, NULL);
+		mciSendString(L"play radio", NULL, 0, NULL);
 		break;
 	case 2:
-		PlaySound(L".\\sunete\\taraf.wav", NULL, SND_ASYNC | SND_FILENAME);
+		mciSendString(L"open \".\\sunete\\taraf.wav\" type mpegvideo alias radio", NULL, 0, NULL);
+		mciSendString(L"play radio", NULL, 0, NULL);
+		//PlaySound(L".\\sunete\\taraf.wav", NULL, SND_ASYNC | SND_FILENAME);
 		break;
 	}
 

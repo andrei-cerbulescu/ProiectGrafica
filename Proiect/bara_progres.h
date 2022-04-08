@@ -2,7 +2,7 @@
 #include <GL/freeglut.h>
 
 extern double timp, ok;
-double progres;
+extern double progres;
 double total_drum = 12000;
 
 void deseneaza_bara_progres() {
