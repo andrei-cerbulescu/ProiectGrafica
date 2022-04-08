@@ -7,7 +7,6 @@
 int id_canal = 0;
 int decalaj = 0;
 double radio_timer = 0;
-int dim_decalaj = 12;
 bool muzica_pornita = true;
 
 void schimba_canal(int val) {
@@ -27,7 +26,10 @@ void schimba_muzica() {
 	case 2:
 		mciSendString(L"open \".\\sunete\\taraf.wav\" type mpegvideo alias radio", NULL, 0, NULL);
 		mciSendString(L"play radio", NULL, 0, NULL);
-		//PlaySound(L".\\sunete\\taraf.wav", NULL, SND_ASYNC | SND_FILENAME);
+		break;
+	case 3:
+		mciSendString(L"open \".\\sunete\\populara.mp3\" type mpegvideo alias radio", NULL, 0, NULL);
+		mciSendString(L"play radio", NULL, 0, NULL);
 		break;
 	}
 
@@ -37,7 +39,7 @@ void deseneaza_radio() {
 	glColor3f(0.55, 0.788, 0.451);
 	std::string radio = "Radio: ";
 	std::string canal = "";
-	if (id_canal > 2) {
+	if (id_canal > 3) {
 		id_canal = 0;
 	}
 	switch (id_canal) {
@@ -50,16 +52,20 @@ void deseneaza_radio() {
 	case 2:
 		canal = "Taraf";
 		break;
+	case 3:
+		canal = "Radio Muzica Populara";
+		break;
 	default:
 		canal = "oprit";
 		break;
 	}
+	int dim_display = 10;
 	radio_timer += 0.01;
 	if (radio_timer > 10) {
 		radio_timer = 0;
 		decalaj += 1;
-		if (decalaj >= dim_decalaj) {
-			decalaj = -5;
+		if (decalaj >= dim_display) {
+			decalaj = -(int)canal.length();
 		}
 	}
 	std::string canal_decalat = "";
@@ -68,10 +74,15 @@ void deseneaza_radio() {
 	}
 	canal_decalat += canal;
 	if (decalaj >= 0) {
-		radio = radio + canal_decalat.substr(0, dim_decalaj - 2);
+		radio = radio + canal_decalat.substr(0, dim_display);
 	}
 	else {
-		radio = radio + canal_decalat.substr(-decalaj, canal_decalat.length());
+		if (canal.length() > dim_display) {
+			radio = radio + canal_decalat.substr(-decalaj, dim_display);
+		}
+		else {
+			radio = radio + canal_decalat.substr(-decalaj, canal_decalat.length());
+		}
 	}
 	if (!muzica_pornita) {
 		schimba_muzica();

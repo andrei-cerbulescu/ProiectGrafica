@@ -157,6 +157,8 @@ int main(int argc, char** argv)
 	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGTH);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Livreaza Comanda");
+	mciSendString(L"open \".\\sunete\\trafic.mp3\" type mpegvideo alias sunet_ambient", NULL, 0, NULL);
+	mciSendString(L"play sunet_ambient repeat", NULL, 0, NULL);
 	//PlaySound(L".\\sunete\\glovo.wav", NULL, SND_ASYNC | SND_FILENAME);
 	init();
 	glutDisplayFunc(drawScene);
