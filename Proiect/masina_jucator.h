@@ -1,10 +1,17 @@
 #pragma once
 #include <GL/freeglut.h>
 #include "./texte.h"
+#include "./masini.h"
+#include "./Utils.h"
+#include "./State.h"
+
 
 extern double rsj, rdj, rss, rds;
 extern double ok;
 extern double contor;
+extern double WINDOW_WIDTH;
+extern double WINDOW_HEIGTH;
+extern State current_state;
 
 void deseneaza_masina_jucator() {
 	glPushMatrix();
@@ -27,7 +34,8 @@ void deseneaza_masina_jucator() {
 	glPopMatrix();
 
 	if (ok == 0) {
-		RenderString(250.0f, 200.0f, GLUT_BITMAP_8_BY_13, (const unsigned char*)"GAME OVER");
+		current_state = State::Game_Over;
+		RenderString(get_adjusted_width(WINDOW_WIDTH/2), get_adjusted_width(WINDOW_HEIGTH/2), GLUT_BITMAP_8_BY_13, (const unsigned char*)"GAME OVER");
 	}
 
 	if (contor == 1 && (j != 160 && j != 320))

@@ -16,6 +16,13 @@ void RenderString(float x, float y, void* font, const unsigned char* string)
 	glutBitmapString(font, string);
 }
 
+
+void RenderString(float x, float y, void* font, std::string to_render)
+{
+	RenderString(x, y, font, (const unsigned char*)to_render.c_str());
+}
+
+
 void livreaza_comanda() {
 	glColor3f(0.55, 0.788, 0.451);
 

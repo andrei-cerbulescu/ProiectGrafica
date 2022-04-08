@@ -1,7 +1,13 @@
 #pragma once
 #include <GL/freeglut.h>
+#include <iostream>
+#include "GameOver.h"
 
 extern double ok, j, contor, timp;
+int choice;
+bool pressed;
+int MAX_CHOICE = 2;
+int DEADZONE = 500;
 
 void miscasus(void)
 {
@@ -45,20 +51,121 @@ void decelereaza(void) {
 	}
 }
 
-void keyboard(int key, int x, int y)
+void handle_choice_left() {
+	if (choice == 0)
+		choice = MAX_CHOICE - 1;
+	else
+		choice = (choice - 1) % MAX_CHOICE;
+}
+
+void handle_choice_right() {
+	choice = (choice + 1) % MAX_CHOICE;
+}
+
+void keyboardSpecialKeys(int key, int x, int y)
 {
-	switch (key) {
-	case GLUT_KEY_UP:
-		miscasus();
+	switch (current_state) {
+	case State::Game_Over: {
+		switch (key) {
+		case GLUT_KEY_LEFT:
+			handle_choice_left();
+			break;
+		case GLUT_KEY_RIGHT:
+			handle_choice_right();
+			break;
+		}
 		break;
-	case GLUT_KEY_DOWN:
-		miscajos();
+	}
+	case State::Started: {
+		switch (key) {
+		case GLUT_KEY_UP:
+			miscasus();
+			break;
+		case GLUT_KEY_DOWN:
+			miscajos();
+			break;
+		case GLUT_KEY_RIGHT:
+			accelereaza();
+			break;
+		case GLUT_KEY_LEFT:
+			decelereaza();
+			break;
+		}
 		break;
-	case GLUT_KEY_RIGHT:
-		accelereaza();
+	}
+	}
+}
+
+void keyboardNormalKeys(unsigned char key, int x, int y) {
+	switch (current_state) {
+	case State::Game_Over: {
+		switch (key) {
+		case 13: handle_game_over_screen(); break;
+		}
 		break;
-	case GLUT_KEY_LEFT:
-		decelereaza();
+	}
+	case State::Started: {
 		break;
+	}
+	}
+}
+enum class Button_Direction { UP, DOWN, LEFT, RIGHT, SPECIAL_LEFT, SPECIAL_RIGHT, NONE };
+
+Button_Direction get_direction(int x, int y) {
+	if (abs(x) - abs(y) > 0) {
+		if (x > DEADZONE) {
+			return Button_Direction::RIGHT;
+		}
+		if (x < -DEADZONE) {
+			return Button_Direction::LEFT;
+		}
+	}
+	else {
+		if (y > DEADZONE) {
+			return Button_Direction::DOWN;
+		}
+		if (y < -DEADZONE) {
+			return Button_Direction::UP;
+		}
+	}
+	return Button_Direction::NONE;
+}
+
+void joystick(unsigned int buttonmask, int x, int y, int z)
+{
+	std::cout << buttonmask << " " << x << " " << y << " " << z << '\n';
+	switch (current_state) {
+	case State::Game_Over: {
+		switch (get_direction(x, y)) {
+		case Button_Direction::LEFT: {
+			handle_choice_left();
+			break;
+		}
+		case Button_Direction::RIGHT: {
+			handle_choice_right();
+			break;
+		}
+		}
+		break;
+	}
+	case State::Started: {
+		switch (get_direction(x, y)) {
+		case Button_Direction::UP:
+			miscasus();
+			break;
+		case Button_Direction::DOWN:
+			miscajos();
+			break;
+		}
+		switch (buttonmask) {
+		case 128:
+			accelereaza();
+			break;
+		case 64:
+			decelereaza();
+			break;
+		}
+		break;
+	}
 	}
 }

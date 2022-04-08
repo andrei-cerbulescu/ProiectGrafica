@@ -7,6 +7,9 @@
 #include "./masina_jucator.h"
 #include "./masini.h"
 #include "./keyboard.h"
+#include "./State.h"
+#include "./GameOver.h"
+#include <time.h>
 
 using namespace std;
 
@@ -26,6 +29,10 @@ double timp = 0.15;
 int pct = 1000;
 double rsj, rdj, rss, rds = 0;
 float temp_mancare = 100;
+double WINDOW_WIDTH = 800;
+double WINDOW_HEIGTH = 600;
+
+State current_state = State::Started;
 
 void init(void)
 {
@@ -71,21 +78,29 @@ void drawScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	deseneaza_sosea();
+	if (current_state == State::Started) {
+		std::cout << "aa\n";
+		deseneaza_sosea();
 
-	deseneaza_masina_jucator();
+		deseneaza_masina_jucator();
 
-	deseneaza_masina();
+		deseneaza_masina();
+
+		deseneazaIarba();
+
+		livreaza_comanda();
+		mancare_calda();
+		vitezometru();
+
+		startgame();
+	}
+
+	if (current_state == State::Game_Over) {
+		deseneaza_ecran_game_over();
+	}
 	
-	deseneazaIarba();
-
-	livreaza_comanda();
-	mancare_calda();
-	vitezometru();
-
-	startgame();
 	glutPostRedisplay();
-	glutSwapBuffers();
+	//glutSwapBuffers();
 	glFlush();
 }
 
@@ -101,15 +116,17 @@ void reshape(int w, int h)
 
 int main(int argc, char** argv)
 {
+	srand(time(0));
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-	glutInitWindowSize(800, 600);
+	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGTH);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Depaseste masinile - mini game");
 	init();
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(reshape);
-	glutSpecialFunc(keyboard);
-
+	glutSpecialFunc(keyboardSpecialKeys);
+	glutKeyboardFunc(keyboardNormalKeys);
+	glutJoystickFunc(joystick, 250);
 	glutMainLoop();
 }
