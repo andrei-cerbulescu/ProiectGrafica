@@ -1,5 +1,6 @@
 #pragma once
 #include <GL/freeglut.h>
+#include "./radio.h"
 
 extern double ok, j, contor, timp;
 
@@ -59,6 +60,9 @@ void keyboard(int key, int x, int y)
 		break;
 	case GLUT_KEY_LEFT:
 		decelereaza();
+		break;
+	case GLUT_KEY_PAGE_UP:
+		schimba_canal(1);
 		break;
 	}
 }

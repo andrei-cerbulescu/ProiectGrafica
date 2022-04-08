@@ -44,5 +44,8 @@
     <ClInclude Include="scena_oprit_de_politie.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="radio.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

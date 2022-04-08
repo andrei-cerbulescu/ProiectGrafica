@@ -9,6 +9,7 @@
 #include "./keyboard.h"
 #include "./bara_progres.h"
 #include "./scena_oprit_de_politie.h"
+#include "./radio.h"
 
 using namespace std;
 
@@ -114,6 +115,7 @@ void drawScene(void)
 		vitezometru();
 
 		deseneaza_bara_progres();
+		deseneaza_radio();
 
 		startgame();
 	}
@@ -140,8 +142,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(800, 600);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Livreaza Comanda");
-	wstring path = L".\\sunete\\glovo.wav";
-	PlaySound(path.c_str(), NULL, SND_ASYNC | SND_FILENAME);
+	PlaySound(L".\\sunete\\glovo.wav", NULL, SND_ASYNC | SND_FILENAME);
 	init();
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(reshape);
