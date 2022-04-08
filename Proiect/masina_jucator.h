@@ -35,6 +35,7 @@ void deseneaza_masina_jucator() {
 
 	if (ok == 0) {
 		current_state = State::Game_Over;
+		PlaySound(NULL, NULL, SND_ASYNC | SND_FILENAME);
 		RenderString(get_adjusted_width(WINDOW_WIDTH/2), get_adjusted_width(WINDOW_HEIGTH/2), GLUT_BITMAP_8_BY_13, (const unsigned char*)"GAME OVER");
 	}
 

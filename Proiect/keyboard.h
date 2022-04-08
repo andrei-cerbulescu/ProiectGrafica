@@ -1,11 +1,8 @@
 #pragma once
 #include <GL/freeglut.h>
-<<<<<<< HEAD
 #include <iostream>
 #include "GameOver.h"
-=======
 #include "./radio.h"
->>>>>>> origin/master
 
 extern double ok, j, contor, timp;
 int choice;
@@ -79,10 +76,6 @@ void keyboardSpecialKeys(int key, int x, int y)
 			break;
 		}
 		break;
-	case GLUT_KEY_PAGE_UP:
-		schimba_canal(1);
-		break;
-	}
 	case State::Started: {
 		switch (key) {
 		case GLUT_KEY_UP:
@@ -97,6 +90,10 @@ void keyboardSpecialKeys(int key, int x, int y)
 		case GLUT_KEY_LEFT:
 			decelereaza();
 			break;
+		case GLUT_KEY_PAGE_UP:
+			schimba_canal(1);
+			break;
+		}
 		}
 		break;
 	}
@@ -153,6 +150,10 @@ void joystick(unsigned int buttonmask, int x, int y, int z)
 			break;
 		}
 		}
+		switch (buttonmask) {
+			case GLUT_JOYSTICK_BUTTON_B:
+				handle_game_over_screen(); break;
+		}
 		break;
 	}
 	case State::Started: {
@@ -171,7 +172,13 @@ void joystick(unsigned int buttonmask, int x, int y, int z)
 		case 64:
 			decelereaza();
 			break;
+		case 16:
+			break;
+		case 32:
+			schimba_canal(1);
+			break;
 		}
+		
 		break;
 	}
 	}

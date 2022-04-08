@@ -47,9 +47,9 @@ void deseneaza_ecran_game_over(void) {
 	std::string retry_string = "Retry";
 	std::string exit_string  = "Exit";
 
-	std::string chosen_string = "Xd";
-	double chosen_x = 1;
-	double chosen_y = 1;
+	std::string chosen_string;
+	double chosen_x;
+	double chosen_y;
 
 	if (choice == 0) {
 		chosen_string = retry_string;

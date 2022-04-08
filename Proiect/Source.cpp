@@ -7,15 +7,12 @@
 #include "./masina_jucator.h"
 #include "./masini.h"
 #include "./keyboard.h"
-<<<<<<< HEAD
 #include "./State.h"
 #include "./GameOver.h"
 #include <time.h>
-=======
 #include "./bara_progres.h"
 #include "./scena_oprit_de_politie.h"
 #include "./radio.h"
->>>>>>> origin/master
 
 using namespace std;
 
@@ -35,17 +32,14 @@ double timp = 0.15;
 int pct = 1000;
 double rsj, rdj, rss, rds = 0;
 float temp_mancare = 100;
-<<<<<<< HEAD
 double WINDOW_WIDTH = 800;
 double WINDOW_HEIGTH = 600;
-
-State current_state = State::Started;
-=======
 int urmeaza_politie = 0;
 int este_politie = 0;
 int flashuri_date = 0;
 bool oprit_de_politie = false;
->>>>>>> origin/master
+
+State current_state = State::Started;
 
 void init(void)
 {
@@ -106,50 +100,41 @@ void drawScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-<<<<<<< HEAD
 	if (current_state == State::Started) {
-		std::cout << "aa\n";
-=======
-	if (oprit_de_politie || temp_mancare<=0) {
-		if (oprit_de_politie) {
-			scena_oprit_de_politie();
+		if (oprit_de_politie || temp_mancare <= 0) {
+			if (oprit_de_politie) {
+				scena_oprit_de_politie();
+			}
+			if (temp_mancare <= 0) {
+				RenderString(400.0f, -100.0f, GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"S-a racit mancarea! :/");
+			}
 		}
-		if (temp_mancare <= 0) {
-			RenderString(400.0f, -100.0f, GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"S-a racit mancarea! :/");
+		else {
+			deseneaza_sosea();
+
+			deseneaza_masina_jucator();
+
+			deseneaza_masina();
+
+			deseneazaIarba();
+
+			livreaza_comanda();
+			mancare_calda();
+			vitezometru();
+
+			deseneaza_bara_progres();
+			deseneaza_radio();
+
+			startgame();
 		}
-	}
-	else {
->>>>>>> origin/master
-		deseneaza_sosea();
-
-		deseneaza_masina_jucator();
-
-		deseneaza_masina();
-
-		deseneazaIarba();
-
-		livreaza_comanda();
-		mancare_calda();
-		vitezometru();
-
-<<<<<<< HEAD
-		startgame();
 	}
 
 	if (current_state == State::Game_Over) {
 		deseneaza_ecran_game_over();
 	}
-	
-=======
-		deseneaza_bara_progres();
-		deseneaza_radio();
 
-		startgame();
-	}
-
->>>>>>> origin/master
 	glutPostRedisplay();
-	//glutSwapBuffers();
+	glutSwapBuffers();
 	glFlush();
 }
 
