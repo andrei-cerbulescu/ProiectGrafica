@@ -7,6 +7,9 @@
 #include "./masina_jucator.h"
 #include "./masini.h"
 #include "./keyboard.h"
+#include "./State.h"
+#include "./GameOver.h"
+#include <time.h>
 #include "./bara_progres.h"
 #include "./scena_oprit_de_politie.h"
 #include "./radio.h"
@@ -29,10 +32,14 @@ double timp = 0.15;
 int pct = 1000;
 double rsj, rdj, rss, rds = 0;
 float temp_mancare = 100;
+double WINDOW_WIDTH = 800;
+double WINDOW_HEIGTH = 600;
 int urmeaza_politie = 0;
 int este_politie = 0;
 int flashuri_date = 0;
 bool oprit_de_politie = false;
+
+State current_state = State::Started;
 
 void init(void)
 {
@@ -93,31 +100,37 @@ void drawScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	if (oprit_de_politie || temp_mancare<=0) {
-		if (oprit_de_politie) {
-			scena_oprit_de_politie();
+	if (current_state == State::Started) {
+		if (oprit_de_politie || temp_mancare <= 0) {
+			if (oprit_de_politie) {
+				scena_oprit_de_politie();
+			}
+			if (temp_mancare <= 0) {
+				RenderString(400.0f, -100.0f, GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"S-a racit mancarea! :/");
+			}
 		}
-		if (temp_mancare <= 0) {
-			RenderString(400.0f, -100.0f, GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"S-a racit mancarea! :/");
+		else {
+			deseneaza_sosea();
+
+			deseneaza_masina_jucator();
+
+			deseneaza_masina();
+
+			deseneazaIarba();
+
+			livreaza_comanda();
+			mancare_calda();
+			vitezometru();
+
+			deseneaza_bara_progres();
+			deseneaza_radio();
+
+			startgame();
 		}
 	}
-	else {
-		deseneaza_sosea();
 
-		deseneaza_masina_jucator();
-
-		deseneaza_masina();
-
-		deseneazaIarba();
-
-		livreaza_comanda();
-		mancare_calda();
-		vitezometru();
-
-		deseneaza_bara_progres();
-		deseneaza_radio();
-
-		startgame();
+	if (current_state == State::Game_Over) {
+		deseneaza_ecran_game_over();
 	}
 
 	glutPostRedisplay();
@@ -137,16 +150,18 @@ void reshape(int w, int h)
 
 int main(int argc, char** argv)
 {
+	srand(time(0));
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-	glutInitWindowSize(800, 600);
+	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGTH);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Livreaza Comanda");
 	PlaySound(L".\\sunete\\glovo.wav", NULL, SND_ASYNC | SND_FILENAME);
 	init();
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(reshape);
-	glutSpecialFunc(keyboard);
-
+	glutSpecialFunc(keyboardSpecialKeys);
+	glutKeyboardFunc(keyboardNormalKeys);
+	glutJoystickFunc(joystick, 250);
 	glutMainLoop();
 }
