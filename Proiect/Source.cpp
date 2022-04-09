@@ -40,7 +40,7 @@ int flashuri_date = 0;
 bool oprit_de_politie = false;
 double progres = 0;
 
-State current_state = State::Started;
+State current_state = State::Game_Over;
 
 void init(void)
 {

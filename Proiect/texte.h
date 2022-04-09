@@ -7,19 +7,28 @@
 extern float temp_mancare;
 extern double ok, timp;
 
+void RenderString(float x, float y, void* font, const unsigned char* string, float values[])
+{
+	glColor3f(values[0], values[1], values[3]);
+	glRasterPos2f(x, y);
+	glutBitmapString(font, string);
+}
+
 void RenderString(float x, float y, void* font, const unsigned char* string)
 {
-
-	glColor3f(0.0f, 0.0f, 0.0f);
-	glRasterPos2f(x, y);
-
-	glutBitmapString(font, string);
+	float values[] = {0.0f, 0.0f, 0.0f};
+	RenderString(x, y, font, string, values);
 }
 
 
 void RenderString(float x, float y, void* font, std::string to_render)
 {
 	RenderString(x, y, font, (const unsigned char*)to_render.c_str());
+}
+
+void RenderString(float x, float y, void* font, std::string to_render, float values[])
+{
+	RenderString(x, y, font, (const unsigned char*)to_render.c_str(), values);
 }
 
 
