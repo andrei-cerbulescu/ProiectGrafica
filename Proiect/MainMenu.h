@@ -170,7 +170,7 @@ void display_menu() {
 void deseneaza_main_menu() {
 	if (menu_list_options.size() == 0) {
 		append_option("Joaca");
-		append_option("Optiuni");
+		append_option("Statistici");
 		append_option("Iesi");
 	}
 	top = 4 * WINDOW_HEIGTH / 5;
@@ -286,6 +286,7 @@ void deseneaza_main_menu() {
 void handle_main_menu() {
 	switch (current_choice) {
 		case 0: GameState::getInstance()->setStartGame(); break;
+		case 1: GameState::getInstance()->setStatsScreen(); break;
 		case 2: GameState::quitGame(); break;
 	}
 }

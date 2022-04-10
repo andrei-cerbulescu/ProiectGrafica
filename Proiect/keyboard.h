@@ -3,6 +3,7 @@
 #include <iostream>
 #include "GameOver.h"
 #include "./radio.h"
+#include "Stats.h"
 
 extern double ok, j, contor, timp;
 int choice;
@@ -114,6 +115,17 @@ void keyboardSpecialKeys(int key, int x, int y)
 		}
 		break;
 	}
+	case State::Stats: {
+		switch (key) {
+		case GLUT_KEY_LEFT:
+			get_stats_options().decrease_choice();
+			break;
+		case GLUT_KEY_RIGHT:
+			get_stats_options().increase_choice();
+			break;
+		}
+		break;
+	}
 	}
 
 }
@@ -132,6 +144,12 @@ void keyboardNormalKeys(unsigned char key, int x, int y) {
 	case State::Main_Menu: {
 		switch (key) {
 		case 13: handle_main_menu(); break;
+		}
+		break;
+	}
+	case State::Stats: {
+		switch (key) {
+		case 13: handle_stats(); break;
 		}
 		break;
 	}
@@ -227,6 +245,23 @@ void joystick(unsigned int buttonmask, int x, int y, int z)
 		switch (buttonmask) {
 		case GLUT_JOYSTICK_BUTTON_B:
 			handle_main_menu(); break;
+		}
+		break;
+	}
+	case State::Stats: {
+		switch (get_direction(x, y)) {
+		case Button_Direction::LEFT: {
+			get_stats_options().decrease_choice();
+			break;
+		}
+		case Button_Direction::RIGHT: {
+			get_stats_options().increase_choice();
+			break;
+		}
+		}
+		switch (buttonmask) {
+		case GLUT_JOYSTICK_BUTTON_B:
+			handle_stats(); break;
 		}
 		break;
 	}
