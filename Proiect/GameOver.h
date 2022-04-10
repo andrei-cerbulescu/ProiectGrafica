@@ -2,19 +2,13 @@
 #include <GL/freeglut.h>
 #include "Utils.h"
 #include "texte.h"
+#include "MainMenu.h"
+
 
 extern double WINDOW_WIDTH;
 extern double WINDOW_HEIGTH;
 extern int choice;
 extern bool pressed;
-extern double ok;
-extern double j;
-extern double i;
-extern double rsj, rdj, rss, rds;
-extern double progres;
-extern float temp_mancare;
-
-Reason game_over_reason = Reason::None;
 
 void draw_cold(int x, double left_most, double top_most, double right_most, double bottom_most);
 
@@ -57,7 +51,7 @@ void deseneaza_ecran_game_over(void) {
 	double right_most = left_most * 3;
 	double bottom_most = reason_left_y + diff;
 
-	switch (game_over_reason) {
+	switch (GameState::getInstance()->getGameOverReason()) {
 		case Reason::Police: {
 			double diff = 24;
 			double insignia_left_x = reason_left_x + diff;
@@ -186,8 +180,8 @@ void deseneaza_ecran_game_over(void) {
 void handle_game_over_screen() {
 	std::cout << choice << std::endl;
 	switch (choice) {
-	case 0: rsj = 0; rdj = 0; rss = 0; rds = 0.0; j = 0.0; ok = 1; progres = 0; temp_mancare = 100;  current_state = State::Started; break;
-		case 1: glutLeaveMainLoop(); break;
+	case 0:  GameState::getInstance()->setStartGame(); break;
+	case 1: GameState::getInstance()->setMainMenu(); break;
 	}
 }
 
