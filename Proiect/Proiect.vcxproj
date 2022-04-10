@@ -29,7 +29,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -148,12 +148,18 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bara_progres.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="iarba.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="masina_jucator.h" />
     <ClInclude Include="masini.h" />
+    <ClInclude Include="radio.h" />
+    <ClInclude Include="scena_oprit_de_politie.h" />
     <ClInclude Include="sosea.h" />
+    <ClInclude Include="State.h" />
     <ClInclude Include="texte.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
