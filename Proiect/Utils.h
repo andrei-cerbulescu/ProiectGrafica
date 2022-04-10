@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 double adjust_width_by = 100.0;
 double adjust_heigth_by = 140.0;
 
@@ -61,4 +62,52 @@ public:
 	double sfarsit_desen() {
 		return this->x + this->text.size() * 12;
 	}
+};
+
+class OptiuniOnScreen {
+private:
+	double diff;
+	std::vector<Text> menu_list_options;
+	double start_y;
+	double start_x;
+	int current_choice;
+	Tip_Chenar chenar;
+public:
+	OptiuniOnScreen(double diff, double start_x, double start_y, Tip_Chenar chenar) {
+		this->diff = diff;
+		this->start_x = start_x;
+		this->start_y = start_y;
+		this->chenar = chenar;
+	}
+	void increase_choice() {
+		current_choice = (current_choice + 1) % menu_list_options.size();
+	}
+	void decrease_choice() {
+		if (current_choice == 0)
+			current_choice = menu_list_options.size() - 1;
+		else
+			current_choice--;
+	}
+	void append_option(std::string what_to_draw) {
+		double start;
+		if (menu_list_options.empty())
+			start = start_x;
+		else
+			start = menu_list_options[menu_list_options.size() - 1].sfarsit_desen();
+		menu_list_options.push_back(*(new Text(start, start_y, what_to_draw, chenar)));
+	}
+	void display_menu() {
+		for (int i = 0; i < menu_list_options.size(); i++) {
+			if (i == current_choice) {
+				menu_list_options[i].deseneaza_cu_chenar();
+			}
+			else {
+				menu_list_options[i].deseneaza();
+			}
+		}
+	}
+	int get_current_size() {
+		return menu_list_options.size();
+	}
+	int get_current_choice() { return current_choice; }
 };

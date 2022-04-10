@@ -14,6 +14,8 @@
 #include "./scena_oprit_de_politie.h"
 #include "./radio.h"
 #include "./MainMenu.h"
+#include "GameData.h"
+#include "Stats.h"
 
 using namespace std;
 
@@ -156,8 +158,16 @@ void drawScene(void)
 		deseneaza_main_menu();
 		break;
 	}
+	case State::Stats: {
+		deseneaza_sosea();
+		deseneaza_masina_jucator();
+		deseneaza_masina();
+		deseneazaIarba();
+		startmenu();
+		deseneaza_stats();
+		break;
 	}
-
+	}
 	glutPostRedisplay();
 	glutSwapBuffers();
 	glFlush();
@@ -175,6 +185,7 @@ void reshape(int w, int h)
 
 int main(int argc, char** argv)
 {
+	GameData::getInstance();
 	srand(time(0));
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
