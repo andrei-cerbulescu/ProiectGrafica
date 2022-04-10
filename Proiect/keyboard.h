@@ -71,7 +71,7 @@ void handle_choice_right() {
 
 void keyboardSpecialKeys(int key, int x, int y)
 {
-	switch (current_state) {
+	switch (GameState::getInstance()->getState()) {
 	case State::Game_Over: {
 		switch (key) {
 		case GLUT_KEY_LEFT:
@@ -82,32 +82,44 @@ void keyboardSpecialKeys(int key, int x, int y)
 			break;
 		}
 		break;
+	}
 	case State::Started: {
 		switch (key) {
-		case GLUT_KEY_UP:
-			miscasus();
-			break;
-		case GLUT_KEY_DOWN:
-			miscajos();
+			case GLUT_KEY_UP:
+				miscasus();
+				break;
+			case GLUT_KEY_DOWN:
+				miscajos();
+				break;
+			case GLUT_KEY_RIGHT:
+				accelereaza();
+				break;
+			case GLUT_KEY_LEFT:
+				decelereaza();
+				break;
+			case GLUT_KEY_PAGE_UP:
+				schimba_canal(1);
+				break;
+			}
+		break;
+		}
+	case State::Main_Menu: {
+		switch (key) {
+		case GLUT_KEY_LEFT:
+			decrease_choice();
 			break;
 		case GLUT_KEY_RIGHT:
-			accelereaza();
+			increase_choice();
 			break;
-		case GLUT_KEY_LEFT:
-			decelereaza();
-			break;
-		case GLUT_KEY_PAGE_UP:
-			schimba_canal(1);
-			break;
-		}
 		}
 		break;
 	}
 	}
+
 }
 
 void keyboardNormalKeys(unsigned char key, int x, int y) {
-	switch (current_state) {
+	switch (GameState::getInstance()->getState()) {
 	case State::Game_Over: {
 		switch (key) {
 		case 13: handle_game_over_screen(); break;
@@ -115,6 +127,12 @@ void keyboardNormalKeys(unsigned char key, int x, int y) {
 		break;
 	}
 	case State::Started: {
+		break;
+	}
+	case State::Main_Menu: {
+		switch (key) {
+		case 13: handle_main_menu(); break;
+		}
 		break;
 	}
 	}
@@ -144,7 +162,7 @@ Button_Direction get_direction(int x, int y) {
 void joystick(unsigned int buttonmask, int x, int y, int z)
 {
 	std::cout << buttonmask << " " << x << " " << y << " " << z << '\n';
-	switch (current_state) {
+	switch (GameState::getInstance()->getState()) {
 	case State::Game_Over: {
 		switch (get_direction(x, y)) {
 		case Button_Direction::LEFT: {
@@ -193,6 +211,23 @@ void joystick(unsigned int buttonmask, int x, int y, int z)
 			break;
 		}
 		
+		break;
+	}
+	case State::Main_Menu: {
+		switch (get_direction(x, y)) {
+		case Button_Direction::LEFT: {
+			decrease_choice();
+			break;
+		}
+		case Button_Direction::RIGHT: {
+			increase_choice();
+			break;
+		}
+		}
+		switch (buttonmask) {
+		case GLUT_JOYSTICK_BUTTON_B:
+			handle_main_menu(); break;
+		}
 		break;
 	}
 	}

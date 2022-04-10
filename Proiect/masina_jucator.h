@@ -11,7 +11,6 @@ extern double ok;
 extern double contor;
 extern double WINDOW_WIDTH;
 extern double WINDOW_HEIGTH;
-extern State current_state;
 
 void deseneaza_masina_jucator() {
 	glPushMatrix();
@@ -51,7 +50,7 @@ void deseneaza_masina_jucator() {
 	glPopMatrix();
 
 	if (ok == 0) {
-		current_state = State::Game_Over;
+		GameState::getInstance()->setGameOver(Reason::Crash);
 		PlaySound(NULL, NULL, SND_ASYNC | SND_FILENAME);
 		RenderString(get_adjusted_width(WINDOW_WIDTH/2), get_adjusted_width(WINDOW_HEIGTH/2), GLUT_BITMAP_8_BY_13, (const unsigned char*)"GAME OVER");
 	}

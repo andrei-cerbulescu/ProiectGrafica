@@ -18,6 +18,7 @@ void scena_oprit_de_politie() {
 	}
 
 	if (timer > 10) {
+		GameState::getInstance()->setGameOver(Reason::Police);
 		RenderString(250.0f, 200.0f, GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"Game Over");
 	}
 

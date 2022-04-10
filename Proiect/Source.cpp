@@ -13,6 +13,7 @@
 #include "./bara_progres.h"
 #include "./scena_oprit_de_politie.h"
 #include "./radio.h"
+#include "./MainMenu.h"
 
 using namespace std;
 
@@ -25,8 +26,8 @@ double j = 0.0;
 double i = 0.0;
 double contor = 0;
 double loc_vert = 800;
-int vector[3] = { 0, 160, 320 };
-double height = vector[rand() % 3];
+int coloane[3] = { 0, 160, 320 };
+double height = coloane[rand() % 3];
 int score = 0;
 double timp = 0.15;
 int pct = 1000;
@@ -39,8 +40,6 @@ int este_politie = 0;
 int flashuri_date = 0;
 bool oprit_de_politie = false;
 double progres = 0;
-
-State current_state = State::Started;
 
 void init(void)
 {
@@ -59,7 +58,7 @@ void startgame(void)
 		}
 
 		este_politie = 0;
-		height = vector[rand() % 3];
+		height = coloane[rand() % 3];
 
 		if (urmeaza_politie) {
 			urmeaza_politie = 0;
@@ -97,17 +96,31 @@ void startgame(void)
 	}
 }
 
+void startmenu(void) {
+	startgame();
+	if (height == j) {
+		if (j < 2) {
+			miscasus();
+		}
+		else {
+			miscajos();
+		}
+	}
+
+}
 void drawScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	if (current_state == State::Started) {
+	switch (GameState::getInstance()->getState()) {
+	case State::Started: {
 		if (oprit_de_politie || temp_mancare <= 0) {
 			if (oprit_de_politie) {
 				scena_oprit_de_politie();
 			}
 			if (temp_mancare <= 0) {
 				RenderString(400.0f, -100.0f, GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"S-a racit mancarea! :/");
+				GameState::getInstance()->setGameOver(Reason::Cold);
 			}
 		}
 		else {
@@ -128,10 +141,21 @@ void drawScene(void)
 
 			startgame();
 		}
+		break;
 	}
-
-	if (current_state == State::Game_Over) {
+	case State::Game_Over: {
 		deseneaza_ecran_game_over();
+		break;
+	}
+	case State::Main_Menu: {
+		deseneaza_sosea();
+		deseneaza_masina_jucator();
+		deseneaza_masina();
+		deseneazaIarba();
+		startmenu();
+		deseneaza_main_menu();
+		break;
+	}
 	}
 
 	glutPostRedisplay();
@@ -157,9 +181,6 @@ int main(int argc, char** argv)
 	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGTH);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Livreaza Comanda");
-	mciSendString(L"open \".\\sunete\\trafic.mp3\" type mpegvideo alias sunet_ambient", NULL, 0, NULL);
-	mciSendString(L"play sunet_ambient repeat", NULL, 0, NULL);
-	//PlaySound(L".\\sunete\\glovo.wav", NULL, SND_ASYNC | SND_FILENAME);
 	init();
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(reshape);
