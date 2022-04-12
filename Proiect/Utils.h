@@ -1,9 +1,6 @@
 #pragma once
 #include <vector>
-<<<<<<< HEAD
 #include "Colors.h"
-=======
->>>>>>> origin
 double adjust_width_by = 100.0;
 double adjust_heigth_by = 140.0;
 

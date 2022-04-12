@@ -2,10 +2,7 @@
 #include "radio.h"
 #include "GameData.h"
 #include "GameData.h"
-<<<<<<< HEAD
 #include "Colors.h"
-=======
->>>>>>> origin
 enum class State { Started, Game_Over, Main_Menu, Stats };
 enum class Reason { Police, Crash, Cold, None};
 
@@ -40,18 +37,12 @@ public:
     }
 
     void setStatsScreen() {
-<<<<<<< HEAD
         Colors::getInstance()->changeSeed();
-=======
->>>>>>> origin
         resetGameState();
         this->current_state = State::Stats;
     }
     void setGameOver(Reason reason) {
-<<<<<<< HEAD
         Colors::getInstance()->changeSeed();
-=======
->>>>>>> origin
         GameData::getInstance()->save_time_spent_in_game();
         resetGameState();
         this->game_over_reason = reason;
