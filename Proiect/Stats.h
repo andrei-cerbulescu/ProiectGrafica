@@ -15,10 +15,13 @@ void deseneaza_stats() {
 		optiuni.append_option("Return");
 	}
 	double diff = 25;
+<<<<<<< HEAD
+=======
 	//float score;
 	//unsigned int number_of_orders;
 	//unsigned long time_spent_total;
 	//unsigned long time_spent;
+>>>>>>> origin
 	double initial_x = get_adjusted_width(2 * WINDOW_WIDTH / 7);
 	double initial_y = get_adjusted_heigth(4 * WINDOW_HEIGTH / 7);
 	RenderString(initial_x, initial_y -= diff, GLUT_BITMAP_TIMES_ROMAN_24, "Score: " + std::to_string(GameData::getInstance()->get_score()));

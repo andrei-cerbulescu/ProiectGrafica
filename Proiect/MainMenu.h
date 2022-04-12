@@ -3,6 +3,7 @@
 #include "Utils.h"
 #include "texte.h"
 #include <vector>
+#include <iostream>
 
 extern double WINDOW_WIDTH;
 extern double WINDOW_HEIGTH;
@@ -178,7 +179,7 @@ void deseneaza_main_menu() {
 	double left = WINDOW_WIDTH / 50;
 	double placeholder;
 
-	glColor3d(0, 0, 0);
+	//glColor3fv(Colors::getInstance()->getColor(Shade::Black));
 
 	// L
 	deseneaza_bastonas(left);

@@ -2,6 +2,7 @@
 #include <GL/freeglut.h>
 #include "./texte.h"
 #include <string>
+#include "Colors.h"
 #pragma comment(lib, "Winmm.lib")
 
 int id_canal = 0;
@@ -36,7 +37,7 @@ void schimba_muzica() {
 }
 
 void deseneaza_radio() {
-	glColor3f(0.55, 0.788, 0.451);
+	glColor3fv(Colors::getInstance()->getColor(Shade::Radio));
 	std::string radio = "Radio: ";
 	std::string canal = "";
 	if (id_canal > 3) {

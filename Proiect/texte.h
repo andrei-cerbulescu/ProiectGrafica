@@ -33,14 +33,14 @@ void RenderString(float x, float y, void* font, std::string to_render, float val
 
 
 void livreaza_comanda() {
-	glColor3f(0.55, 0.788, 0.451);
+	glColor3fv(Colors::getInstance()->getColor(Shade::Radio));
 
 	RenderString(200.0f, 425.0f, GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"Livreaza comanda!");
 }
 
 void mancare_calda() {
 	if (ok == 1) temp_mancare -= 0.0015;
-	glColor3f(0.55, 0.788, 0.451);
+	glColor3fv(Colors::getInstance()->getColor(Shade::Radio));
 	std::stringstream stream;
 	stream << std::fixed << std::setprecision(2) << temp_mancare;
 	std::string var = "Temperatura mancare: " + stream.str();
@@ -49,7 +49,7 @@ void mancare_calda() {
 
 void vitezometru() {
 	if (ok == 1) temp_mancare -= 0.0005;
-	glColor3f(0.55, 0.788, 0.451);
+	glColor3fv(Colors::getInstance()->getColor(Shade::Radio));
 	std::stringstream stream;
 	stream << std::fixed << std::setprecision(2) << timp * 200;
 	std::string var = "Viteza: " + stream.str() + " km/h";

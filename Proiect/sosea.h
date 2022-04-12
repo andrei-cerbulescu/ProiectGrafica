@@ -7,7 +7,7 @@ extern double j;
 void deseneaza_sosea() {
 	// Delimitare sosea
 	glLineWidth(3);
-	glColor3f(1, 1, 1);
+	glColor3fv(Colors::getInstance()->getColor(Shade::White));
 
 	// Delimitam soseaua de iarba partea de jos
 	glBegin(GL_LINES);

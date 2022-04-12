@@ -1,5 +1,6 @@
 #pragma once
 #include <GL/freeglut.h>
+#include "Colors.h"
 
 extern double loc_vert, height;
 extern int este_politie, urmeaza_politie, flashuri_date;
@@ -11,7 +12,7 @@ void da_flashuri() {
 	if (flashuri_aprinse) {
 		glBegin(GL_TRIANGLES);
 
-		glColor3f(1.0, 1.0, 0);
+		glColor3fv(Colors::getInstance()->getColor(Shade::Yellow));
 		glOrtho(-30.0, -45.0, -45.0, -2.5, 1.5, 5.5);
 		glVertex2f(-45.0, -5.0);
 		glVertex2f(-60.0, 10.0);
@@ -21,7 +22,7 @@ void da_flashuri() {
 
 		glBegin(GL_TRIANGLES);
 
-		glColor3f(1.0, 1.0, 0);
+		glColor3fv(Colors::getInstance()->getColor(Shade::Yellow));
 
 		glVertex2f(-45.0, 5.0);
 		glVertex2f(-60.0, 20.0);
@@ -46,11 +47,11 @@ void deseneaza_masina() {
 	glPushMatrix();
 	glTranslated(loc_vert, height, 0.0);
 
-	glColor3f(0.471, 0.667, 0.949);
+	glColor3fv(Colors::getInstance()->getColor(Shade::Enemy_Car));
 	glRecti(-45, -15, 45, 15);
 
 	if (este_politie) {
-		glColor3f(1, 0.0, 0.0);
+		glColor3fv(Colors::getInstance()->getColor(Shade::Red));
 		glRecti(-30, -10, -15, 0);
 	}
 

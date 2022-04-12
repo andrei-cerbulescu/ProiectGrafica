@@ -2,6 +2,10 @@
 #include "radio.h"
 #include "GameData.h"
 #include "GameData.h"
+<<<<<<< HEAD
+#include "Colors.h"
+=======
+>>>>>>> origin
 enum class State { Started, Game_Over, Main_Menu, Stats };
 enum class Reason { Police, Crash, Cold, None};
 
@@ -36,10 +40,18 @@ public:
     }
 
     void setStatsScreen() {
+<<<<<<< HEAD
+        Colors::getInstance()->changeSeed();
+=======
+>>>>>>> origin
         resetGameState();
         this->current_state = State::Stats;
     }
     void setGameOver(Reason reason) {
+<<<<<<< HEAD
+        Colors::getInstance()->changeSeed();
+=======
+>>>>>>> origin
         GameData::getInstance()->save_time_spent_in_game();
         resetGameState();
         this->game_over_reason = reason;
@@ -48,6 +60,7 @@ public:
         mciSendString(L"play game_over repeat", NULL, 0, NULL);
     }
     void setMainMenu() {
+        Colors::getInstance()->changeSeed();
         PlaySound(NULL, NULL, SND_ASYNC | SND_FILENAME);
         mciSendString(L"close radio", NULL, 0, NULL);
         mciSendString(L"close game_over", NULL, 0, NULL);
@@ -55,6 +68,7 @@ public:
         PlaySound(L".\\sunete\\glovo.wav", NULL, SND_ASYNC | SND_FILENAME);
     }
     void setStartGame() {
+        Colors::getInstance()->changeSeed();
         PlaySound(NULL, NULL, SND_ASYNC | SND_FILENAME);
         mciSendString(L"close game_over", NULL, 0, NULL);
         mciSendString(L"open \".\\sunete\\trafic.mp3\" type mpegvideo alias sunet_ambient", NULL, 0, NULL);

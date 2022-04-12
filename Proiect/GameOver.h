@@ -3,6 +3,7 @@
 #include "Utils.h"
 #include "texte.h"
 #include "MainMenu.h"
+#include "Colors.h"
 
 
 extern double WINDOW_WIDTH;
@@ -13,7 +14,7 @@ extern bool pressed;
 void draw_cold(int x, double left_most, double top_most, double right_most, double bottom_most);
 
 void deseneaza_ecran_game_over(void) {
-	glColor3f(0, 0, 0);
+	glColor3fv(Colors::getInstance()->getColor(Shade::Black));
 
 	// Ecran negru
 	glBegin(GL_POLYGON);
@@ -28,7 +29,7 @@ void deseneaza_ecran_game_over(void) {
 	double left_y = get_adjusted_heigth(WINDOW_HEIGTH / 4);
 	double right_x = get_adjusted_width(3 * WINDOW_WIDTH / 4);
 	double right_y = get_adjusted_heigth(3 * WINDOW_HEIGTH / 4);
-	glColor3f(1, 1, 1);
+	glColor3fv(Colors::getInstance()->getColor(Shade::White));
 	glBegin(GL_POLYGON);
 	glVertex2i(left_x, left_y);
 	glVertex2i(left_x, right_y);
@@ -63,16 +64,15 @@ void deseneaza_ecran_game_over(void) {
 			double insignia_middle_up_y = insignia_left_y + diff;
 			double insignia_middle_down_y = reason_left_y + 18 + diff;
 
-			glColor3f(0, 0, 0);
+			glColor3fv(Colors::getInstance()->getColor(Shade::Black));
 			glBegin(GL_POLYGON);
 			glVertex2i(insignia_left_x, insignia_left_y);
 			glVertex2i(insignia_middle_x, insignia_middle_up_y);
 			glVertex2i(insignia_right_x, insignia_left_y);
 			glVertex2i(insignia_middle_x, insignia_middle_down_y);
 			glEnd();
-			float colors[] = { 0.75f, 1.0f, 0.0f };
 
-			RenderString(insignia_middle_x - diff, insignia_middle_up_y - 18 - diff, GLUT_BITMAP_HELVETICA_18, "POLICE", colors);
+			RenderString(insignia_middle_x - diff, insignia_middle_up_y - 18 - diff, GLUT_BITMAP_HELVETICA_18, "POLICE", Colors::getInstance()->getColor(Shade::Yellow));
 			RenderString(((reason_left_x + reason_right_x) / 2) - diff, reason_left_y + 10, GLUT_BITMAP_TIMES_ROMAN_10, "Ai fost prins!");
 			break;
 		}
@@ -93,7 +93,7 @@ void deseneaza_ecran_game_over(void) {
 			double origin_x = (reason_left_x + reason_right_x) / 2;
 			double origin_y = (reason_left_y + reason_right_y) / 2;
 
-			glColor3f(1.0f, 0.4f, 0.0f);
+			glColor3fv(Colors::getInstance()->getColor(Shade::Orange));
 			glBegin(GL_TRIANGLE_FAN);
 			glVertex3f(origin_x, origin_y, 0.0f);
 			glVertex3f(left_most_x, left_most_y, 0.0f);
@@ -108,7 +108,7 @@ void deseneaza_ecran_game_over(void) {
 			glEnd();
 
 
-			glColor3f(0.6f, 1.0f, 0.0f);
+			glColor3fv(Colors::getInstance()->getColor(Shade::Yellow));
 			glPushMatrix();
 			glScalef(0.75f, 0.75f, 0.0f);
 			glTranslatef(100.0f, 70.0f, 50.0f);
@@ -129,13 +129,13 @@ void deseneaza_ecran_game_over(void) {
 			break;
 		}
 		case Reason::Cold: {
-			glColor3f(0.4f, 1.0f, 0.0f); // umple clepsidra
+			glColor3fv(Colors::getInstance()->getColor(Shade::Yellow)); // umple clepsidra
 			draw_cold(GL_POLYGON, left_most, top_most, right_most, bottom_most);
 
-			glColor3f(1.0f, 1.0f, 1.0f); // goleste clepsidra
+			glColor3fv(Colors::getInstance()->getColor(Shade::White, false)); // goleste clepsidra
 			draw_cold(GL_TRIANGLES, left_most, top_most, right_most, bottom_most);
 
-			glColor3f(0.0f, 0.0f, 0.0f);
+			glColor3fv(Colors::getInstance()->getColor(Shade::Black));
 			draw_cold(GL_LINE_LOOP, left_most, top_most, right_most, bottom_most); // chenar clepsidra - negru
 			RenderString(((reason_left_x + reason_right_x) / 2) - 40, reason_left_y, GLUT_BITMAP_TIMES_ROMAN_10, "Timpul a expirat!");
 			break;
@@ -168,7 +168,7 @@ void deseneaza_ecran_game_over(void) {
 	glPushMatrix();
 	glTranslated(chosen_x -12 * 1.25, chosen_y - 12, 0.0);
 
-	glColor3f(0, 1, 1);
+	glColor3fv(Colors::getInstance()->getColor(Shade::Very_Light_Blue));
 	glRecti(0, 0, 12 * chosen_string.size(), 3 * 12);
 
 	glPopMatrix();

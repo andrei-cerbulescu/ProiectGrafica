@@ -1,7 +1,8 @@
 #pragma once
 #include <GL/freeglut.h>
+#include "Colors.h"
 void deseneazaIarba() {
-	glColor3f(0.55, 0.788, 0.451);
+	glColor3fv(Colors::getInstance()->getColor(Shade::Grass));
 
 	// Iarba de jos
 	glBegin(GL_POLYGON);
