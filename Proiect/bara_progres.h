@@ -1,5 +1,6 @@
 #pragma once
 #include <GL/freeglut.h>
+#include "Colors.h"
 
 extern double timp, ok;
 extern double progres;
@@ -12,7 +13,7 @@ void deseneaza_bara_progres() {
 	glPushMatrix();
 	glTranslated(250.0, -100.0, 0.0);
 
-	glColor3f(0.0, 0.0, 0.0);
+	glColor3fv(Colors::getInstance()->getColor(Shade::Black));
 	glRecti(-90, -5, 90, 5);
 
 	glPopMatrix();
@@ -20,7 +21,7 @@ void deseneaza_bara_progres() {
 	glPushMatrix();
 	glTranslated(250.0 - 80.0 + (180 * progres/total_drum), -100.0, 0.0);
 
-	glColor3f(1.0, 1.0, 0.0);
+	glColor3fv(Colors::getInstance()->getColor(Shade::Yellow));
 	glRecti(-10, -10, 10, 10);
 
 	glPopMatrix();

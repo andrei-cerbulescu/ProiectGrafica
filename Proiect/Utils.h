@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "Colors.h"
 double adjust_width_by = 100.0;
 double adjust_heigth_by = 140.0;
 
@@ -32,11 +33,11 @@ public:
 		this->x + text.size() * 12;
 	}
 	void deseneaza() {
-		float values[] = { 0.0f, 0.0f, 0.0f };
+		float *values = Colors::getInstance()->getColor(Shade::Black);
 		this->deseneaza(values);
 	}
 	void deseneaza_cu_chenar(float vals[]) {
-		glColor3f(1.0f, 0.0f, 0.0f);
+		glColor3fv(Colors::getInstance()->getColor(Shade::Red));
 		switch (chenar) {
 			case Tip_Chenar::Intreg:
 				glPushMatrix();
@@ -56,7 +57,7 @@ public:
 
 	}
 	void deseneaza_cu_chenar() {
-		float values[] = { 1.0f, 0.0f, 0.0f };
+		float *values = Colors::getInstance()->getColor(Shade::Red);
 		this->deseneaza_cu_chenar(values);
 	}
 	double sfarsit_desen() {

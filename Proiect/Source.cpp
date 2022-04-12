@@ -1,5 +1,5 @@
 #include <iostream>
-#include<windows.h>
+#include <windows.h>
 #include <GL/freeglut.h>
 #include "./Iarba.h"
 #include "./Texte.h"
@@ -16,6 +16,12 @@
 #include "./MainMenu.h"
 #include "GameData.h"
 #include "Stats.h"
+#include "Colors.h"
+#include <random>
+
+std::random_device dev;
+std::mt19937 rng(dev());
+std::uniform_int_distribution<std::mt19937::result_type> dist3(1, 3); // distribution in range [1, 3]
 
 using namespace std;
 
@@ -45,7 +51,8 @@ double progres = 0;
 
 void init(void)
 {
-	glClearColor(0.98, 0.929, 0.792, 0.0);
+	float* color_background = Colors::getInstance()->getColor(Shade::Background);
+	glClearColor(color_background[0], color_background[1], color_background[2], 0.0);
 	glMatrixMode(GL_PROJECTION);
 	glOrtho(left_m, right_m, bottom_m, top_m, -1.0, 1.0);
 }
@@ -113,7 +120,7 @@ void startmenu(void) {
 void drawScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-
+	Colors::getInstance()->setSeed();
 	switch (GameState::getInstance()->getState()) {
 	case State::Started: {
 		if (oprit_de_politie || temp_mancare <= 0) {
@@ -183,6 +190,30 @@ void reshape(int w, int h)
 	glLoadIdentity();
 }
 
+void Initialize(int key)
+{
+	switch (key)
+	{
+	case 0:
+		Colors::getInstance()->setMode(Mode::Normal);
+		break;
+	case 1:
+		Colors::getInstance()->setMode(Mode::Alternative);
+		break;
+	case 2:
+		Colors::getInstance()->setMode(Mode::Random);
+		break;
+	}
+}
+
+void aaaa(int key) {
+	if (key == 0)
+	{
+		exit(0);
+	}
+}
+
+
 int main(int argc, char** argv)
 {
 	GameData::getInstance();
@@ -198,5 +229,19 @@ int main(int argc, char** argv)
 	glutSpecialFunc(keyboardSpecialKeys);
 	glutKeyboardFunc(keyboardNormalKeys);
 	glutJoystickFunc(joystick, 250);
+
+	int menuBackground = glutCreateMenu(Initialize);
+	
+	glutAddMenuEntry("Normal", 0);
+	glutAddMenuEntry("Alternativ", 1);
+	glutAddMenuEntry("Random", 2);
+
+	int menuMain = glutCreateMenu(aaaa);
+
+	glutAddSubMenu("Setare Culori", menuBackground);
+
+	glutAddMenuEntry("Iesire ", 0);
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
+
 	glutMainLoop();
 }
