@@ -5,6 +5,7 @@
 extern double timp, ok;
 extern double progres;
 double total_drum = 12000;
+extern float score, temp_mancare;
 
 void deseneaza_bara_progres() {
 	if (ok) {
@@ -20,6 +21,12 @@ void deseneaza_bara_progres() {
 
 	glPushMatrix();
 	glTranslated(250.0 - 80.0 + (180 * progres/total_drum), -100.0, 0.0);
+
+	if (progres / total_drum > 1) {
+		progres = 0;
+		score += temp_mancare;
+		temp_mancare = 100;
+	}
 
 	glColor3fv(Colors::getInstance()->getColor(Shade::Yellow));
 	glRecti(-10, -10, 10, 10);
