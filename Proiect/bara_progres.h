@@ -1,5 +1,6 @@
 #pragma once
 #include <GL/freeglut.h>
+#include "GameData.h"
 
 extern double timp, ok;
 extern double progres;
@@ -12,7 +13,8 @@ void deseneaza_bara_progres() {
 	}
 	if (progres / total_drum > 1) {
 		progres = 0;
-		score += temp_mancare;
+		GameData::getInstance()->increase_score(temp_mancare);
+		GameData::getInstance()->increase_orders();
 		temp_mancare = 100;
 	}
 	glPushMatrix();
